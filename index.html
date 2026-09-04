@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F6EEDD">
+<title>Bagel Doctor — NY Style Bagels, Sandwiches &amp; Coffee</title>
+<link rel="icon" type="image/png" href="images/logo-badge.png">
+<link rel="apple-touch-icon" href="images/logo-badge.png">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+
+</head>
+<body data-tab="bagels">
+
+<div class="stickybar">
+  <div class="wrap topline">
+    <a class="brandmark" href="#" data-tab="bagels" aria-label="Bagel Doctor — home">
+      <img src="images/logo.png" alt="Bagel Doctor" class="brand-logo">
+    </a>
+    <div class="header-actions">
+      <button class="icon-round" id="profileBtn" type="button" aria-label="Your account" aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6" stroke="currentColor" stroke-width="1.8"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <button class="cart-btn" id="cartOpenBtn" type="button" aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6 7h15l-1.5 9.5a2 2 0 0 1-2 1.7H8.7a2 2 0 0 1-2-1.7L5 4H2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="9.5" cy="21" r="1.4" fill="currentColor"/>
+          <circle cx="18" cy="21" r="1.4" fill="currentColor"/>
+        </svg>
+        <span>Cart</span>
+        <span class="cart-count" id="cartCount" data-empty="true">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="wrap tabline">
+    <button class="tab-btn active" data-tab="bagels">Bagels</button>
+    <button class="tab-btn" data-tab="breakfast">Breakfast</button>
+    <button class="tab-btn" data-tab="sandwiches">Sandwiches</button>
+    <button class="tab-btn" data-tab="drinks">Drinks</button>
+    <button class="tab-btn" data-tab="pound">By the Pound</button>
+    <button class="tab-btn tab-orders" data-tab="orders">My Orders</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-montage" id="heroMontage" aria-hidden="true">
+    <div class="montage-slide s1 active" style="--img:url('images/process-1.jpg')"></div>
+    <div class="montage-slide s2" style="--img:url('images/process-2.jpg')"></div>
+    <div class="montage-slide s3" style="--img:url('images/process-3.jpg')"></div>
+    <div class="montage-slide s4" style="--img:url('images/process-4.jpg')"></div>
+    <div class="montage-slide s5" style="--img:url('images/process-5.jpg')"></div>
+    <div class="montage-slide s6" style="--img:url('images/process-6.jpg')"></div>
+  </div>
+  <div class="hero-overlay"></div>
+
+  <!-- floating decorations -->
+  <div class="hero-decor" aria-hidden="true">
+    <svg class="bagel b1" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="9"/><circle cx="50" cy="50" r="14" fill="none" stroke="currentColor" stroke-width="5"/></svg>
+    <svg class="bagel b2" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="9"/><circle cx="50" cy="50" r="14" fill="none" stroke="currentColor" stroke-width="5"/></svg>
+    <svg class="bagel b3" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="9"/><circle cx="50" cy="50" r="14" fill="none" stroke="currentColor" stroke-width="5"/></svg>
+    <svg class="bagel b4" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="9"/><circle cx="50" cy="50" r="14" fill="none" stroke="currentColor" stroke-width="5"/></svg>
+    <span class="seed sd1"></span><span class="seed sd2"></span><span class="seed sd3"></span>
+    <span class="seed sd4"></span><span class="seed sd5"></span><span class="seed sd6"></span>
+  </div>
+
+  <!-- spinning stamp badge -->
+  <div class="hero-stamp" aria-hidden="true">
+    <svg viewBox="0 0 120 120">
+      <defs><path id="stampPath" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
+      <text><textPath href="#stampPath">FRESH DAILY ★ HAND ROLLED ★ NEW YORK STYLE ★ </textPath></text>
+    </svg>
+    <span class="stamp-center">🥯</span>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow"><span>★</span> Est. New York · Boiled &amp; Baked Daily <span>★</span></p>
+    <h1 class="hero-title">Bagel Doctor</h1>
+    <p class="hero-desc">New York's hand-rolled bagels — mixed, boiled, seeded, and baked fresh in the neighborhood every morning.</p>
+    <div class="cta-row">
+      <button class="btn-hero" id="viewMenuBtn" type="button">Order Online</button>
+      <button class="btn-hero-ghost" id="viewCartHero" type="button">Open Cart</button>
+    </div>
+  </div>
+  <div class="montage-caption"><span class="dot"></span><span id="montageCaption">Mixing the dough</span></div>
+</header>
+
+<!-- brand marquee strip -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Bagels</span><span class="mstar">✹</span><span>Sandwiches</span><span class="mstar">✹</span><span>Breakfast</span><span class="mstar">✹</span><span>Fresh Coffee</span><span class="mstar">✹</span><span>Cream Cheese</span><span class="mstar">✹</span><span>By the Pound</span><span class="mstar">✹</span>
+    <span>Bagels</span><span class="mstar">✹</span><span>Sandwiches</span><span class="mstar">✹</span><span>Breakfast</span><span class="mstar">✹</span><span>Fresh Coffee</span><span class="mstar">✹</span><span>Cream Cheese</span><span class="mstar">✹</span><span>By the Pound</span><span class="mstar">✹</span>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <!-- ===================== BAGELS ===================== -->
+  <section id="bagels" class="panel active">
+    <div class="panel-head" data-accent="rust">
+      <span class="section-icon" aria-hidden="true">🥯</span>
+      <div class="panel-head-text">
+        <h2>Bagels &amp; Flats</h2>
+        <p>Boiled first, baked second — the only way it's done right. Tap any flavor to add it to your cart.</p>
+      </div>
+    </div>
+
+    <div class="board">
+      <h3>Classic Bagels</h3>
+      <p class="board-note">$1.75 each · every flavor, every day.</p>
+      <div class="chips" id="classicBagels"></div>
+      <div class="price-strip">
+        <span class="tag">1 Bagel <b>$1.75</b></span>
+        <span class="tag">Half Dozen <b>$10.50</b></span>
+        <span class="tag">Baker's Dozen <b>$21.00</b></span>
+      </div>
+    </div>
+
+    <div class="board">
+      <h3>Flats</h3>
+      <p class="board-note">$2.00 each · same dough, pressed flat.</p>
+      <div class="chips" id="flatBagels"></div>
+      <div class="price-strip">
+        <span class="tag">1 Flat <b>$2.00</b></span>
+      </div>
+    </div>
+
+    <div class="board">
+      <h3>Top It Off</h3>
+      <p class="board-note">Any bagel, dressed. Tap a spread to add a fresh bagel with it.</p>
+      <div class="rows" id="spreadsRows"></div>
+    </div>
+
+    <div class="two-col">
+      <div class="board">
+        <h3>Bagel Twists</h3>
+        <p class="board-note">Our hand-twisted bagel — plain or dressed.</p>
+        <div class="rows" id="twistRows"></div>
+      </div>
+
+      <div class="board">
+        <h3>Mini Bagels</h3>
+        <p class="board-note">Same flavors, bite-sized.</p>
+        <div class="rows" id="miniRows"></div>
+      </div>
+    </div>
+
+    <div class="board">
+      <h3>Fresh Baked Extras</h3>
+      <p class="board-note">Croissants and muffins, baked daily.</p>
+      <div class="rows" id="extraRows"></div>
+    </div>
+  </section>
+
+  <!-- ===================== BREAKFAST ===================== -->
+  <section id="breakfast" class="panel">
+    <div class="panel-head" data-accent="ochre">
+      <span class="section-icon" aria-hidden="true">🍳</span>
+      <div class="panel-head-text">
+        <h2>Breakfast</h2>
+        <p>Eggs on a roll or bagel, off the griddle all morning. Add ham, bacon, or sausage to any sandwich.</p>
+      </div>
+    </div>
+
+    <!-- ===== Build Your Egg Sandwich ===== -->
+    <div class="board builder" id="eggBuilder">
+      <h3>Build Your Egg Sandwich</h3>
+      <p class="board-note">Made to order on the griddle. Pick a base, your meat, and pile on the extras — the price updates as you go.</p>
+
+      <div class="build-step">
+        <span class="step-label"><span class="step-num">1</span> Choose your base</span>
+        <div class="opt-grid" id="eggBaseGrid"></div>
+      </div>
+
+      <div class="build-step" id="eggMeatStep">
+        <span class="step-label"><span class="step-num">2</span> Pick your meat</span>
+        <div class="chip-select" id="eggMeatGrid"></div>
+      </div>
+
+      <div class="build-step">
+        <span class="step-label"><span class="step-num">3</span> Served on</span>
+        <div class="chip-select" id="eggBreadGrid"></div>
+        <div class="bagel-picker" id="eggBagelPicker"></div>
+      </div>
+
+      <div class="build-step">
+        <span class="step-label"><span class="step-num">4</span> Free fixings</span>
+        <div class="chip-select" id="eggFixGrid"></div>
+      </div>
+
+      <div class="build-step">
+        <span class="step-label"><span class="step-num">5</span> Add extras</span>
+        <div class="addon-list" id="eggAddonList"></div>
+        <div class="veg-row">
+          <span class="veg-label">Veggies · $0.50 each</span>
+          <div class="chip-select" id="eggVegGrid"></div>
+        </div>
+      </div>
+
+      <div class="build-foot">
+        <div class="build-summary" id="eggSummary">Your sandwich</div>
+        <button class="btn-primary" id="eggAddBtn" type="button">Add to Cart · $7.99</button>
+      </div>
+    </div>
+
+    <!-- ===== Omelettes (coming soon) ===== -->
+    <div class="board">
+      <h3>Omelettes</h3>
+      <p class="board-note">Three-egg omelettes made to order, served with a bagel or roll. Full lineup coming soon — ask at the counter for today's options.</p>
+      <div class="rows" id="omeletteRows"></div>
+    </div>
+
+    <!-- ===== House favorites ===== -->
+    <div class="board">
+      <h3>Griddle Favorites</h3>
+      <p class="board-note">Bigger plates and sides off the griddle.</p>
+      <div class="rows" id="breakfastRows"></div>
+    </div>
+
+    <div class="board">
+      <h3>Breakfast Specials</h3>
+      <p class="board-note">A different spread every weekday — each comes with a 12 oz. hot beverage. From $6.59.</p>
+      <div class="rows" id="breakfastSpecialRows"></div>
+    </div>
+  </section>
+
+  <!-- ===================== SANDWICHES ===================== -->
+  <section id="sandwiches" class="panel">
+    <div class="panel-head" data-accent="pine">
+      <span class="section-icon" aria-hidden="true">🥪</span>
+      <div class="panel-head-text">
+        <h2>Sandwiches</h2>
+        <p>Cold deli classics or straight off the griddle — every cold sandwich comes with your choice of side and a pickle.</p>
+      </div>
+    </div>
+
+    <div class="subtoggle" role="tablist" aria-label="Sandwich type">
+      <button class="sub-btn active" data-sub="cold">Cold Sandwiches</button>
+      <button class="sub-btn" data-sub="hot">Hot Sandwiches</button>
+    </div>
+
+    <div id="cold" class="sub-panel active">
+      <div class="callout">
+        <span class="marker">the fine print</span>
+        <p>All cold sandwiches come with your choice of Potato Salad, Macaroni Salad, or Cole Slaw, and a pickle. Add cheese for $1.00, or lettuce, tomato, or onion for $0.50 each.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="board">
+          <h3>Salads &amp; Fish</h3>
+          <div class="rows" id="saladRows"></div>
+        </div>
+        <div class="board">
+          <h3>Meats</h3>
+          <div class="rows" id="meatRows"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="hot" class="sub-panel">
+      <div class="callout">
+        <span class="marker">served your way</span>
+        <p>Every hot sandwich is made to order. Pick <b>On Roll</b> or <b>On Hero</b> to add it to your cart.</p>
+      </div>
+
+      <div class="board">
+        <h3>Hot Sandwiches</h3>
+        <div class="rows" id="hotRows"></div>
+      </div>
+
+      <button class="egg-promo" id="eggPromo" type="button">
+        <span class="egg-promo-icon">🍳</span>
+        <span class="egg-promo-text">
+          <b>Build Your Egg Sandwich</b>
+          <small>Any meat, cheese, and extras — made to order on the griddle. From $3.50.</small>
+        </span>
+        <span class="egg-promo-cta">Build it →</span>
+      </button>
+    </div>
+
+    <div class="board">
+      <h3>Lunch Specials</h3>
+      <p class="board-note">Served on a bagel or roll, with a 1/4 lb. of potato salad, macaroni salad, or cole slaw and a pickle.</p>
+      <div class="rows" id="lunchSpecialRows"></div>
+    </div>
+  </section>
+
+  <!-- ===================== DRINKS ===================== -->
+  <section id="drinks" class="panel">
+    <div class="panel-head" data-accent="ochre">
+      <span class="section-icon" aria-hidden="true">☕</span>
+      <div class="panel-head-text">
+        <h2>Drinks</h2>
+        <p>Fresh-brewed coffee, poured all day, plus the morning combos regulars ask for by name.</p>
+      </div>
+    </div>
+
+    <div class="board" style="overflow:visible;">
+      <svg class="steam" viewBox="0 0 34 26" aria-hidden="true">
+        <path class="s1" d="M8 24 C 4 18, 12 14, 8 8" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path class="s2" d="M20 24 C 16 18, 24 14, 20 8" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+      <h3>Fresh Coffee</h3>
+      <div class="rows" id="coffeeRows"></div>
+    </div>
+
+    <div class="board">
+      <h3>Doctor on the Run</h3>
+      <p class="board-note">Monday–Friday, until 11 AM. Comes with a 12 oz. hot beverage.</p>
+      <div class="rows" id="comboRows"></div>
+    </div>
+
+    <div class="board">
+      <h3>Breakfast Special</h3>
+      <p class="board-note">Bagel or roll with the spread of the day, plus a 12 oz. hot beverage included — from $6.59.</p>
+      <div class="rows">
+        <div class="row"><span class="name">Monday</span><span class="price">Scallion Cream Cheese</span></div>
+        <div class="row"><span class="name">Tuesday</span><span class="price">Vegetable Cream Cheese</span></div>
+        <div class="row"><span class="name">Wednesday</span><span class="price">Chef's Choice</span></div>
+        <div class="row"><span class="name">Thursday</span><span class="price">Walnut Raisin</span></div>
+        <div class="row"><span class="name">Friday</span><span class="price">Lox Spread</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BY THE POUND ===================== -->
+  <section id="pound" class="panel">
+    <div class="panel-head" data-accent="pine">
+      <span class="section-icon" aria-hidden="true">⚖️</span>
+      <div class="panel-head-text">
+        <h2>By the Pound</h2>
+        <p>Take the deli counter home. Salads, cream cheeses, cold cuts, and cheeses — priced per pound.</p>
+      </div>
+    </div>
+
+    <div class="portion-bar">
+      <span class="portion-label">How much of each?</span>
+      <div class="portion-toggle" role="tablist" aria-label="Choose portion size">
+        <button class="portion-btn" type="button" data-frac="0.25">¼ lb</button>
+        <button class="portion-btn" type="button" data-frac="0.5">½ lb</button>
+        <button class="portion-btn active" type="button" data-frac="1">1 lb</button>
+      </div>
+      <span class="portion-hint">Prices update live · tap <b>+</b> to add the chosen portion</span>
+    </div>
+
+    <div class="two-col">
+      <div class="board">
+        <h3>Salads</h3>
+        <p class="board-note">Per pound.</p>
+        <div class="rows" id="poundSaladRows"></div>
+      </div>
+      <div class="board">
+        <h3>Cream Cheeses</h3>
+        <p class="board-note">Per pound.</p>
+        <div class="rows" id="poundSpreadRows"></div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="board">
+        <h3>Meats</h3>
+        <p class="board-note">Per pound.</p>
+        <div class="rows" id="poundMeatRows"></div>
+      </div>
+      <div class="board">
+        <h3>Cheeses</h3>
+        <p class="board-note">Per pound.</p>
+        <div class="rows" id="poundCheeseRows"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MY ORDERS ===================== -->
+  <section id="orders" class="panel">
+    <div class="panel-head" data-accent="rust">
+      <span class="section-icon" aria-hidden="true">🧾</span>
+      <div class="panel-head-text">
+        <h2>My Orders</h2>
+        <p>Track your current order and browse everything you've ordered before. Tap an order to see the details.</p>
+      </div>
+    </div>
+    <div id="ordersList"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-scallop" aria-hidden="true"></div>
+
+  <div class="wrap footer-grid">
+    <div class="foot-brand">
+      <img src="images/logo-badge.png" alt="Bagel Doctor" class="footer-logo">
+      <p class="foot-tag">Good Food Heals.</p>
+      <p class="foot-blurb">Hand-rolled New York bagels — boiled, baked, and loaded fresh in the neighborhood every single morning.</p>
+      <div class="foot-social">
+        <a href="#" class="soc" aria-label="Bagel Doctor on Instagram">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>
+        </a>
+        <a href="#" class="soc" aria-label="Bagel Doctor on Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.4l.4-2.8h-2.8V9.4c0-.8.3-1.4 1.5-1.4h1.4V5.5c-.7-.1-1.5-.2-2.3-.2-2.3 0-3.9 1.4-3.9 4v2H8v2.8h2.6V21h2.9z"/></svg>
+        </a>
+        <a href="#" class="soc" aria-label="Bagel Doctor on TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2 1.6 3.6 3.5 3.9v2.6c-1.3.1-2.5-.3-3.5-1v5.9c0 3-2.4 5.4-5.4 5.4S5.2 17.4 5.2 14.4 7.6 9 10.6 9c.3 0 .6 0 .9.1v2.7c-.3-.1-.6-.2-.9-.2-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7 2.7-1.2 2.7-2.7V3H16z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <nav class="foot-col" aria-label="Menu">
+      <h4>Menu</h4>
+      <ul>
+        <li><a href="#" class="foot-link" data-tab="bagels">Bagels &amp; Flats</a></li>
+        <li><a href="#" class="foot-link" data-tab="breakfast">Breakfast</a></li>
+        <li><a href="#" class="foot-link" data-tab="sandwiches">Sandwiches</a></li>
+        <li><a href="#" class="foot-link" data-tab="drinks">Drinks</a></li>
+        <li><a href="#" class="foot-link" data-tab="pound">By the Pound</a></li>
+      </ul>
+    </nav>
+
+    <div class="foot-col">
+      <h4>Hours</h4>
+      <ul class="foot-hours">
+        <li><span>Mon – Fri</span><b>6 AM – 4 PM</b></li>
+        <li><span>Saturday</span><b>6 AM – 3 PM</b></li>
+        <li><span>Sunday</span><b>7 AM – 2 PM</b></li>
+      </ul>
+      <p class="foot-note">🏃 Doctor on the Run · Mon–Fri until 11 AM</p>
+    </div>
+
+    <div class="foot-col">
+      <h4>Visit</h4>
+      <address class="foot-contact">
+        <a href="#" aria-label="Get directions">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.8"/></svg>
+          289 N Broadway, Jericho, NY 11753
+        </a>
+        <a href="tel:+15551234567">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 4h3l1.5 4-2 1.5a12 12 0 0 0 5 5l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          (516) 932-0620
+        </a>
+        <a href="mailto:hello@bageldoctor.com">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M4 7l8 5 8-5" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          hello@bageldoctor.com
+        </a>
+      </address>
+
+      <form class="foot-signup" id="footSignup">
+        <label for="footEmail">Get the fresh drops &amp; deals</label>
+        <div class="signup-row">
+          <input id="footEmail" type="email" placeholder="you@email.com" required>
+          <button type="submit" aria-label="Subscribe">→</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="wrap footer-bottom-inner">
+      <span>© <span id="footYear">2026</span> Bagel Doctor · Baked fresh in New York</span>
+      <span class="foot-fine">If you don't see it, ask for it. · Taxes are additional</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== CART DRAWER ===================== -->
+<div class="overlay-bg" id="overlayBg"></div>
+
+<aside class="drawer" id="cartDrawer" role="dialog" aria-label="Shopping cart">
+  <div class="drawer-head">
+    <h3>Your Order</h3>
+    <button class="icon-btn" id="closeDrawerBtn" aria-label="Close cart">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body" id="drawerBody">
+    <div class="cart-empty">Your cart is empty — add a bagel, a sandwich, or a coffee to get started.</div>
+  </div>
+  <div class="drawer-foot">
+    <div class="subtotal-row">
+      <span>Subtotal</span>
+      <span id="cartSubtotal">$0.00</span>
+    </div>
+    <button class="btn-primary btn-block" id="checkoutBtn" type="button">Checkout</button>
+  </div>
+</aside>
+
+<!-- ===================== CHECKOUT MODAL ===================== -->
+<div class="modal" id="checkoutModal" role="dialog" aria-label="Checkout">
+  <div class="modal-card" id="modalCard">
+    <!-- content injected by JS -->
+  </div>
+</div>
+
+<!-- ===================== PROFILE MODAL ===================== -->
+<div class="modal" id="profileModal" role="dialog" aria-label="Your account">
+  <div class="modal-card" id="profileCard">
+    <!-- content injected by JS -->
+  </div>
+</div>
+
+<!-- ===================== ADMIN DASHBOARD (hidden unless authorized) ===================== -->
+<div class="admin-panel" id="adminPanel" aria-hidden="true">
+  <!-- content injected by JS -->
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
