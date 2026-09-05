@@ -864,3 +864,99 @@
 .ao-btn.primary{ background:var(--ochre); color:oklch(25% 0.03 60); }
 .ao-btn.danger{ background:oklch(100% 0 0 / .1); color:oklch(80% 0.12 35); }
 .ao-btn.ghost{ background:oklch(100% 0 0 / .1); color:var(--cream); }
+
+/* =========================================================================
+   RESPONSIVE — mobile & tablet refinements
+   Kept unlayered on purpose: unlayered rules win over the @layer styles above,
+   so these overrides apply cleanly without fighting specificity.
+   Breakpoints: 900 (tablet) · 620 (phone) · 400 (small phone)
+   ========================================================================= */
+
+/* Never let anything push the page sideways on a phone */
+html, body{ max-width:100%; overflow-x:hidden; }
+img, svg, video{ max-width:100%; }
+
+/* Comfortable tap scrolling for the horizontal tab strip */
+.tabline{ -webkit-overflow-scrolling:touch; scrollbar-width:none; scroll-snap-type:x proximity; }
+.tabline::-webkit-scrollbar{ display:none; }
+.tab-btn{ scroll-snap-align:start; }
+
+/* ---------------- Tablet & below (≤ 900px) ---------------- */
+@media (max-width:900px){
+  main{ padding-block:36px 64px; }
+  .footer-grid{ padding-block:48px 34px; }
+}
+
+/* ---------------- Phones (≤ 620px) ---------------- */
+@media (max-width:620px){
+  .wrap{ padding-inline:16px; }
+  main{ padding-block:28px 52px; }
+  body:not([data-tab="bagels"]) main{ padding-top:24px; }
+
+  /* header: tighten, drop the "Cart" word so the row never crowds */
+  .topline{ padding-block:11px; gap:10px; }
+  .brand-logo{ height:36px; }
+  .header-actions{ gap:8px; }
+  .icon-round{ width:38px; height:38px; }
+  .cart-btn > span:not(.cart-count){ display:none; }
+  .cart-btn{ gap:0; padding:0; width:40px; height:40px; border-radius:50%; justify-content:center; position:relative; }
+  .cart-btn .cart-count{ position:absolute; top:-4px; right:-4px; }
+  .tabline{ gap:7px; padding-bottom:10px; }
+  .tab-btn{ padding:8px 15px; font-size:14px; }
+
+  /* hero: let the title breathe & wrap instead of overflowing.
+     inline-flex can't break a single text node, so go to a plain block. */
+  .hero-content{ padding:52px 20px; max-width:100%; }
+  .hero-title{ display:block; }
+  .hero-title::before, .hero-title::after{ display:none; }
+  .hero-eyebrow{ display:flex; flex-wrap:wrap; justify-content:center; max-width:100%;
+                 letter-spacing:1.4px; padding:6px 13px; font-size:10.5px; }
+  .hero-desc{ max-width:100%; }
+  .cta-row{ gap:11px; width:100%; }
+  .btn-hero, .btn-hero-ghost{ flex:1 1 auto; padding:14px 20px; text-align:center; }
+
+  /* section headers & cards: less desktop padding */
+  .panel-head{ gap:13px; padding:18px; margin-bottom:22px; }
+  .section-icon{ width:50px; height:50px; font-size:27px; border-radius:15px; }
+  .board{ padding:20px 18px 18px; }
+
+  /* menu rows: keep name + price on their line, controls below if needed */
+  .row{ gap:10px; }
+  .hot-options{ justify-content:flex-start; }
+
+  /* checkout: stack paired fields (first/last name, city/zip, etc.) */
+  .field-row{ flex-direction:column; gap:0; }
+  .modal{ padding:20px 12px; align-items:flex-start; }
+  .modal-card{ padding:24px 20px; border-radius:16px; }
+  .modal-card h3{ font-size:21px; }
+
+  /* egg builder / by-the-pound bars flow full width */
+  .portion-bar{ padding:14px 16px; }
+  .portion-hint{ margin-left:0; flex-basis:100%; }
+  .build-foot .btn-primary{ width:100%; }
+
+  /* order & admin rows wrap gracefully */
+  .order-card-head, .order-card-foot, .ao-foot{ flex-wrap:wrap; }
+  .order-card{ padding:18px; }
+
+  /* bigger touch targets for the small +/- controls */
+  .add-btn{ width:32px; height:32px; }
+  .qty-ctrl button{ width:30px; height:30px; }
+
+  /* footer bottom line stacks centered */
+  .footer-bottom-inner{ justify-content:center; text-align:center; }
+}
+
+/* ---------------- Small phones (≤ 400px) ---------------- */
+@media (max-width:400px){
+  .wrap{ padding-inline:13px; }
+  .board{ padding:17px 15px 15px; }
+  .board h3{ font-size:18px; }
+  .panel-head{ padding:15px; }
+  .panel-head p{ font-size:14px; }
+  .section-icon{ width:44px; height:44px; font-size:24px; }
+  .price-strip .tag{ font-size:12px; padding:7px 12px; }
+  .subtoggle{ display:flex; width:100%; }
+  .subtoggle button{ flex:1; padding:9px 12px; }
+  .modal-card{ padding:22px 16px; }
+}
