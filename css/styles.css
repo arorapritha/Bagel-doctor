@@ -879,7 +879,9 @@ img, svg, video{ max-width:100%; }
 /* Comfortable tap scrolling for the horizontal tab strip */
 .tabline{ -webkit-overflow-scrolling:touch; scrollbar-width:none; scroll-snap-type:x proximity; }
 .tabline::-webkit-scrollbar{ display:none; }
-.tab-btn{ scroll-snap-align:start; }
+/* keep each pill full-width so the strip scrolls instead of squeezing
+   the labels ("Bagels" -> "Bage"); flex's default shrink was clipping them */
+.tab-btn{ scroll-snap-align:start; flex:0 0 auto; }
 
 /* ---------------- Tablet & below (≤ 900px) ---------------- */
 @media (max-width:900px){
