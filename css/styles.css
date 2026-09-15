@@ -495,6 +495,24 @@
     transition: background-color .15s ease, color .15s ease;
   }
   .addon-toggle.sel{ background:var(--accent); color:#fff; }
+  .addon-controls{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:flex-end; }
+  .addon-pick{
+    appearance:none; -webkit-appearance:none;
+    padding:8px 34px 8px 14px; border-radius:999px;
+    border:1.5px solid var(--accent); background-color:var(--card); color:var(--accent);
+    font-weight:700; font-size:13px; letter-spacing:.2px; cursor:pointer; max-width:170px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b5432a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 11px center; background-size:14px;
+    transition: background-color .15s ease, color .15s ease, box-shadow .15s ease, transform .12s ease;
+  }
+  .addon-pick:hover{ background-color:var(--accent-soft); transform:translateY(-1px); }
+  .addon-pick:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--accent-soft); }
+  /* once the add-on is actually added, the pill fills in so the choice reads as active */
+  .addon.on .addon-pick{
+    background-color:var(--accent); color:#fff;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  }
+  .addon-pick option{ color:var(--ink); background:var(--card); font-weight:600; }
   .stepper{ display:flex; align-items:center; gap:12px; }
   .stepper button{
     width:29px; height:29px; border-radius:50%; border:1.5px solid var(--accent); background:var(--card);
@@ -961,4 +979,83 @@ img, svg, video{ max-width:100%; }
   .subtoggle{ display:flex; width:100%; }
   .subtoggle button{ flex:1; padding:9px 12px; }
   .modal-card{ padding:22px 16px; }
+}
+
+/* =========================================================================
+   POLISH PASS — bullet-proof text wrapping + livelier motion
+   Unlayered so it wins cleanly over the @layer styles above.
+   ========================================================================= */
+
+/* ----- 1. No text ever clips: long words wrap, flex kids may shrink ----- */
+.row .name, .oi-line span, .l-name, .l-total, .addon-name, .board h3, .board-note,
+.panel-head p, .hero-desc, .foot-blurb, .bagel-dd-label, .build-summary,
+.oc-title, .egg-promo-text b, .egg-promo-text small, .recap-line span,
+.modal-card h3, .order-num-lg, .ao-cust, .ao-where{
+  overflow-wrap:break-word; word-break:break-word; min-width:0;
+}
+.row{ flex-wrap:wrap; }
+.row .name{ flex:1 1 60%; }
+.row-right{ flex-wrap:wrap; justify-content:flex-end; }
+.build-summary{ flex:1 1 100%; }
+
+/* ----- 2. Boards feel interactive: lift + animated heading underline ----- */
+.board{ transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.board h3{ position:relative; display:inline-block; padding-bottom:3px; }
+.board h3::after{
+  content:""; position:absolute; left:0; bottom:0; height:2px; width:0;
+  background:linear-gradient(90deg, var(--accent), transparent);
+  border-radius:2px; transition:width .45s cubic-bezier(.2,.7,.3,1);
+}
+@media (hover:hover){
+  .board:hover{
+    transform:translateY(-3px);
+    box-shadow:0 18px 38px oklch(24% 0.02 40 / 0.15);
+    border-color:color-mix(in oklch, var(--accent) 32%, var(--line));
+  }
+  .board:hover h3::after{ width:100%; }
+}
+
+/* ----- 3. Sticky header casts a soft shadow once you scroll ----- */
+.stickybar{ transition: box-shadow .25s ease, background-color .25s ease; }
+.stickybar.scrolled{ box-shadow:0 8px 24px oklch(24% 0.02 40 / 0.13); }
+
+/* ----- 4. Gentle attention pulse on the primary hero CTA ----- */
+@media (prefers-reduced-motion:no-preference){
+  .btn-hero{ animation:heroPulse 2.8s ease-in-out infinite; }
+  @keyframes heroPulse{
+    0%,100%{ box-shadow:0 10px 26px oklch(20% 0.02 40 / 0.3); }
+    50%{ box-shadow:0 14px 40px oklch(52% 0.14 35 / 0.5); }
+  }
+}
+
+/* ----- 5. Scroll-reveal: sections rise into view as you scroll -----
+   Replaces the all-at-once cardIn stagger so content animates in when it
+   actually enters the viewport. Under reduced-motion (or if JS/IO is
+   unavailable and the .reveal class is never added) everything stays visible. */
+@media (prefers-reduced-motion:no-preference){
+  .panel.active > *{ animation:none; }
+  .reveal{ opacity:0; transform:translateY(26px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1); }
+  .reveal.in{ opacity:1; transform:none; }
+}
+
+/* ----- 6. Hot-sandwich rows stack cleanly on narrow phones ----- */
+@media (max-width:560px){
+  .row-hot{ flex-direction:column; align-items:stretch; gap:11px; }
+  .row-hot .hot-options{ justify-content:flex-start; }
+  .row-hot .opt-btn{ flex:1 1 auto; justify-content:center; }
+  .marquee-track{ font-size:16px; gap:18px; }
+}
+
+/* ----- 7. Extra-meat / cheese add-on row stacks so the dropdown fits ----- */
+@media (max-width:460px){
+  .addon{ flex-direction:column; align-items:stretch; gap:11px; }
+  .addon-controls{ width:100%; justify-content:space-between; }
+  .addon-pick{ max-width:none; flex:1 1 auto; }
+  .addon-toggle{ align-self:flex-start; }
+}
+
+/* ----- 8. Order tracker labels never clip on tiny screens ----- */
+@media (max-width:400px){
+  .ot-step{ font-size:9px; letter-spacing:0; padding:6px 2px; }
+  .hero-title{ font-size:clamp(38px, 12vw, 60px); }
 }

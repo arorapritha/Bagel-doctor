@@ -40,14 +40,32 @@ const extrasData = [
   ["Muffin w/ Butter",3.99,"Muffin, warmed with butter."],
   ["Muffin w/ Jelly",3.99,"Muffin with butter and jelly."]
 ];
+/* ----- Flats, dressed (same dough, pressed flat) ----- */
+const flatSpreadData = [
+  ["Flat w/ Butter",3.69,"Fresh flat with real dairy butter."],
+  ["Flat w/ Cream Cheese",4.99,"Flat with a thick schmear of cream cheese."],
+  ["Flat w/ Flavored Cream Cheese",5.39,"Flat with your choice of flavored cream cheese."],
+  ["Flat w/ Lox Spread",5.39,"Flat with our house-whipped lox spread."],
+  ["Add Jelly",0.50,"Add a side of jelly to any flat."]
+];
+
+/* ----- Breakfast: Omelettes (3-egg, served with a bagel or bread) ----- */
+const omeletteData = [
+  ["Western Omelette",11.99,"Ham, peppers, onions & pepper jack cheese. Served with a side bagel or bread."],
+  ["All American Omelette",12.99,"Bacon, sausage, ham & American cheese. Served with a side bagel or bread."],
+  ["Garden Fresh Omelette",11.99,"Spinach, onions, peppers, mushrooms, tomatoes & swiss or feta cheese. Served with a side bagel or bread."],
+  ["Healthy Doctor Omelette",11.99,"White eggs, turkey, spinach & swiss or feta cheese. Served with a side bagel or bread."],
+  ["Cheesesteak Omelette",12.99,"Roasted beef or pastrami, onions, peppers & mozzarella cheese. Served with a side bagel or bread."],
+  ["L.E.O. Omelette",11.99,"Nova lox, three eggs & onions. Served with a side bagel or bread."]
+];
 
 /* ----- Breakfast: Griddle Favorites (egg sandwiches now use the builder) ----- */
 const breakfastData = [
   ["Hungry Man Special",11.75,"Three eggs with bacon, ham, sausage & cheese on a roll or bagel."],
   ["Home Fries — Small",2.99,"A small side of seasoned home fries."],
-  ["Home Fries — Large",3.99,"A large side of seasoned home fries."],
+  ["Home Fries — Large",5.99,"A large side of seasoned home fries."],
   ["Side of Hash Browns",1.25,"Crispy golden hash browns on the side."],
-  ["Side of Bacon or Sausage",2.50,"A side of crispy bacon or sausage links."],
+  ["Side of Bacon",3.50,"A side of crispy bacon."],
   ["Buttered Roll or Bagel",2.25,"Fresh roll or bagel with real butter."]
 ];
 const breakfastSpecialData = [
@@ -97,7 +115,31 @@ const lunchSpecialData = [
 const coffeeData = [
   ["Coffee — Small",2.25,"Fresh-brewed, poured all day."],
   ["Coffee — Medium",2.65,"Fresh-brewed, poured all day."],
-  ["Coffee — Large",2.99,"Fresh-brewed, poured all day."]
+  ["Coffee — Large",3.15,"Fresh-brewed, poured all day."]
+];
+/* ----- Beverage Bar (hot drinks + cold cases) ----- */
+const beverageData = [
+  ["Hot Tea — Small",2.25,"Hot brewed tea."],
+  ["Hot Tea — Medium",2.65,"Hot brewed tea."],
+  ["Hot Tea — Large",3.15,"Hot brewed tea."],
+  ["Flavored Coffee — Small",2.25,"Fresh-brewed flavored coffee."],
+  ["Flavored Coffee — Medium",2.65,"Fresh-brewed flavored coffee."],
+  ["Flavored Coffee — Large",3.15,"Fresh-brewed flavored coffee."],
+  ["Herbal Tea — Small",2.25,"Caffeine-free herbal tea."],
+  ["Herbal Tea — Medium",2.65,"Caffeine-free herbal tea."],
+  ["Herbal Tea — Large",3.15,"Caffeine-free herbal tea."],
+  ["Hot Chocolate — Small",2.25,"Rich hot chocolate."],
+  ["Hot Chocolate — Medium",2.75,"Rich hot chocolate."],
+  ["Hot Chocolate — Large",3.15,"Rich hot chocolate."],
+  ["Chocolate Drink",3.25,"Iced chocolate drink."],
+  ["20 oz. Soda",2.79,"Bottled fountain soda."],
+  ["Snapple — Small",2.79,"Snapple from the cooler."],
+  ["Snapple — Large",3.79,"Snapple from the cooler."],
+  ["Juice — Small",3.50,"Bottled juice."],
+  ["Juice — Large",6.99,"Bottled juice."],
+  ["Gatorade — Small",2.75,"Chilled Gatorade."],
+  ["Gatorade — Large",3.50,"Chilled Gatorade."],
+  ["Bottled Water",1.50,"Chilled bottled water."]
 ];
 const comboData = [
   ["Buttered Bagel + 12 oz. Hot Beverage",5.50,"Doctor on the Run — Mon–Fri until 11 AM."],
@@ -168,6 +210,8 @@ buildRows(document.getElementById('spreadsRows'), spreadsData);
 buildRows(document.getElementById('twistRows'), twistData);
 buildRows(document.getElementById('miniRows'), miniData);
 buildRows(document.getElementById('extraRows'), extrasData);
+buildRows(document.getElementById('flatSpreadRows'), flatSpreadData);
+buildRows(document.getElementById('omeletteRows'), omeletteData);
 buildRows(document.getElementById('breakfastRows'), breakfastData);
 buildRows(document.getElementById('breakfastSpecialRows'), breakfastSpecialData);
 buildRows(document.getElementById('saladRows'), saladData);
@@ -175,6 +219,7 @@ buildRows(document.getElementById('meatRows'), meatData);
 buildHot(document.getElementById('hotRows'), hotSandwichData);
 buildRows(document.getElementById('lunchSpecialRows'), lunchSpecialData);
 buildRows(document.getElementById('coffeeRows'), coffeeData);
+buildRows(document.getElementById('beverageRows'), beverageData);
 buildRows(document.getElementById('comboRows'), comboData);
 /* ----- By the Pound: choose ¼ / ½ / 1 lb of any item ----- */
 let poundFrac = 1;
@@ -225,22 +270,25 @@ document.querySelectorAll('.portion-btn').forEach(btn => {
     { id:'2meat',   title:'2 Eggs + Meat',          price:6.99, meat:true,  cheese:false, eggs:2 },
     { id:'2meatch', title:'2 Eggs + Meat + Cheese', price:7.99, meat:true,  cheese:true,  eggs:2 }
   ];
-  const MEATS   = ['Bacon','Ham','Turkey','Turkey Bacon','Beef','Pastrami','Sausage'];
+  const MEATS   = ['Turkey','Ham','Pastrami','Bacon','Sausage','Roast Beef','Beef Bacon','Turkey Bacon'];
+  const EXTRA_MEATS   = ['Turkey','Ham','Pastrami','Bacon','Sausage','Roast Beef','Beef Bacon','Turkey Bacon'];
+  const EXTRA_CHEESES = ['Mozzarella','Pepperjack','American','Swiss','Muenster','Cheddar','Provolone'];
   const BAGEL_FLAVORS = classicBagelFlavors.filter(f => f !== 'Rolls'); // full bagel lineup
   const FIXINGS = ['Salt','Pepper','Hot Sauce','Ketchup','Chipotle Mayo','Butter'];
   const ADDONS  = [
     { id:'egg',     label:'Extra Egg',    price:1.00, qty:true,  max:3 },
-    { id:'cheese',  label:'Extra Cheese', price:1.00, qty:true,  max:3 },
-    { id:'meat',    label:'Extra Meat',   price:2.50, qty:true,  max:3 },
+    { id:'cheese',  label:'Extra Cheese', price:1.00, qty:true,  max:3, pick:EXTRA_CHEESES, pickKey:'cheeseType' },
+    { id:'meat',    label:'Extra Meat',   price:2.50, qty:true,  max:3, pick:EXTRA_MEATS,   pickKey:'meatType' },
     { id:'hash',    label:'Hash Browns',  price:1.25, qty:false },
     { id:'avocado', label:'Avocado',      price:2.00, qty:false }
   ];
   const VEGGIES = ['Tomato','Onion','Peppers','Lettuce','Jalapeños','Spinach'];
 
   const st = {
-    base:'2meatch', meat:'Bacon', breadType:'Roll', bagelFlavor:'Plain',
+    base:'2meatch', meat:'Turkey', breadType:'Roll', bagelFlavor:'Plain',
     fixings:new Set(['Salt','Pepper']),
     addons:{ egg:0, cheese:0, meat:0, hash:false, avocado:false },
+    meatType:'Turkey', cheeseType:'Mozzarella',
     veggies:new Set()
   };
   const $ = id => document.getElementById(id);
@@ -302,12 +350,19 @@ document.querySelectorAll('.portion-btn').forEach(btn => {
     $('eggAddonList').innerHTML = ADDONS.map(a => {
       if(a.qty){
         const n = st.addons[a.id];
+        const picker = a.pick ? `
+          <select class="addon-pick" data-kind="addon-pick" data-id="${a.pickKey}" aria-label="Choose ${a.label}">
+            ${a.pick.map(o => `<option value="${esc(o)}" ${st[a.pickKey]===o?'selected':''}>${o}</option>`).join('')}
+          </select>` : '';
         return `<div class="addon ${n>0?'on':''}">
           <span class="addon-name">${a.label} <em>+${money(a.price)}</em></span>
-          <span class="stepper">
-            <button type="button" data-kind="addon-dec" data-id="${a.id}" aria-label="Fewer ${a.label}">−</button>
-            <span class="stepper-n">${n}</span>
-            <button type="button" data-kind="addon-inc" data-id="${a.id}" aria-label="More ${a.label}">+</button>
+          <span class="addon-controls">
+            ${picker}
+            <span class="stepper">
+              <button type="button" data-kind="addon-dec" data-id="${a.id}" aria-label="Fewer ${a.label}">−</button>
+              <span class="stepper-n">${n}</span>
+              <button type="button" data-kind="addon-inc" data-id="${a.id}" aria-label="More ${a.label}">+</button>
+            </span>
           </span>
         </div>`;
       }
@@ -330,8 +385,8 @@ document.querySelectorAll('.portion-btn').forEach(btn => {
   function cartName(){
     const parts = [];
     if(st.addons.egg)     parts.push(`+${st.addons.egg} Egg`);
-    if(st.addons.cheese)  parts.push(`+${st.addons.cheese} Cheese`);
-    if(st.addons.meat)    parts.push(`+${st.addons.meat} Meat`);
+    if(st.addons.cheese)  parts.push(`+${st.addons.cheese} ${st.cheeseType} Cheese`);
+    if(st.addons.meat)    parts.push(`+${st.addons.meat} ${st.meatType}`);
     if(st.addons.hash)    parts.push('+Hash Browns');
     if(st.addons.avocado) parts.push('+Avocado');
     st.veggies.forEach(v => parts.push('+'+v));
@@ -362,6 +417,14 @@ document.querySelectorAll('.portion-btn').forEach(btn => {
     else if(k==='addon-dec')   st.addons[id] = Math.max(0, st.addons[id]-1);
     else if(k==='addon-toggle') st.addons[id] = !st.addons[id];
     else return;
+    update();
+  });
+
+  // extra meat / extra cheese "which one?" dropdowns
+  builder.addEventListener('change', (e) => {
+    const sel = e.target.closest('select[data-kind="addon-pick"]');
+    if(!sel) return;
+    st[sel.dataset.id] = sel.value;
     update();
   });
 
@@ -400,6 +463,11 @@ function switchTab(tabName){
   panels.forEach(p=> p.classList.toggle('active', p.id === tabName));
   document.body.dataset.tab = tabName;
   if(tabName === 'orders' && typeof renderMyOrders === 'function') renderMyOrders();
+  // safety net: never leave a freshly-shown panel's blocks stuck hidden
+  const active = document.getElementById(tabName);
+  if(active){
+    requestAnimationFrame(()=> active.querySelectorAll('.reveal:not(.in)').forEach(el => el.classList.add('in')));
+  }
 }
 function goToTab(tabName){
   const go = ()=>{
@@ -447,6 +515,32 @@ document.getElementById('viewMenuBtn').addEventListener('click', ()=>{
     slides[i].classList.add('active');
     if(capEl) capEl.textContent = captions[i % captions.length];
   }, 3400);
+})();
+
+/* ---------------- dynamic scroll reveal ----------------
+   Each panel's top-level blocks rise into view as they enter the
+   viewport. Gated behind reduced-motion + IntersectionObserver support;
+   if either is missing we simply never add .reveal, so content shows. */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if(!('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold:0.06, rootMargin:'0px 0px -6% 0px' });
+  document.querySelectorAll('.panel').forEach(panel=>{
+    Array.from(panel.children).forEach(el=>{ el.classList.add('reveal'); io.observe(el); });
+  });
+})();
+
+/* ---------------- sticky header lifts on scroll ---------------- */
+(function(){
+  const bar = document.querySelector('.stickybar');
+  if(!bar) return;
+  const onScroll = ()=> bar.classList.toggle('scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive:true });
 })();
 
 const subBtns = document.querySelectorAll('.sub-btn');
