@@ -83,19 +83,21 @@ const saladData = [
   ["Low Fat Tuna",7.99,"Lighter tuna salad — same great flavor."],
   ["Chicken Salad",7.99,"Tender chicken in a creamy house dressing."],
   ["Egg Salad",7.99,"Classic creamy egg salad."],
-  ["Whitefish Salad",7.99,"Smoked whitefish, whipped smooth."],
-  ["Baked Salmon Salad",9.99,"Flaked baked salmon in a light salad."],
-  ["B.L.T.",7.99,"Crispy bacon, lettuce, tomato & mayonnaise."]
+  ["Whitefish Salad",9.99,"Smoked whitefish, whipped smooth."],
+  ["Baked Salmon Salad",10.99,"Flaked baked salmon in a light salad."],
+  ["B.L.T.",8.99,"Crispy bacon, lettuce, tomato & mayonnaise."]
 ];
 const meatData = [
-  ["Turkey Breast",8.99,"Sliced roasted turkey breast."],
-  ["Oven Gold Turkey",8.99,"Boar's Head oven gold turkey."],
-  ["Honey Maple Turkey",8.99,"Sweet Boar's Head honey maple turkey."],
-  ["Cracked Peppermill Turkey",8.99,"Peppercorn-crusted Boar's Head turkey."],
-  ["Boar's Head Ham",8.99,"Premium Boar's Head ham."],
+  ["Turkey Breast",9.99,"Sliced roasted turkey breast."],
+  ["Oven Gold Turkey",9.99,"Boar's Head oven gold turkey."],
+  ["Honey Maple Turkey",9.99,"Sweet Boar's Head honey maple turkey."],
+  ["Cracked Peppermill Turkey",9.99,"Peppercorn-crusted Boar's Head turkey."],
+  ["Boar's Head Ham",9.99,"Premium Boar's Head ham."],
   ["Boar's Head Bologna",7.99,"Classic Boar's Head bologna."],
   ["Genoa Salami",8.99,"Cured Italian Genoa salami."],
-  ["Roast Beef",9.99,"Slow-roasted beef, sliced thin."]
+  ["Roast Beef",9.99,"Slow-roasted beef, sliced thin."],
+  ["Grilled Chicken",9.99,"Griddled grilled chicken breast."],
+  ["Chicken Cutlet",9.99,"Breaded, fried chicken cutlet."]
 ];
 /* hot sandwiches — [name, description, {label: price, ...}] */
 const hotSandwichData = [
@@ -113,33 +115,24 @@ const lunchSpecialData = [
 
 /* ----- Drinks ----- */
 const coffeeData = [
-  ["Coffee — Small",2.25,"Fresh-brewed, poured all day."],
-  ["Coffee — Medium",2.65,"Fresh-brewed, poured all day."],
-  ["Coffee — Large",3.15,"Fresh-brewed, poured all day."]
+  ["Coffee — Small",2.50,"Fresh-brewed, poured all day."],
+  ["Coffee — Medium",2.99,"Fresh-brewed, poured all day."],
+  ["Coffee — Large",3.25,"Fresh-brewed, poured all day."]
 ];
-/* ----- Beverage Bar (hot drinks + cold cases) ----- */
+/* ----- Beverage Bar (hot drinks) ----- */
 const beverageData = [
-  ["Hot Tea — Small",2.25,"Hot brewed tea."],
-  ["Hot Tea — Medium",2.65,"Hot brewed tea."],
-  ["Hot Tea — Large",3.15,"Hot brewed tea."],
-  ["Flavored Coffee — Small",2.25,"Fresh-brewed flavored coffee."],
-  ["Flavored Coffee — Medium",2.65,"Fresh-brewed flavored coffee."],
-  ["Flavored Coffee — Large",3.15,"Fresh-brewed flavored coffee."],
-  ["Herbal Tea — Small",2.25,"Caffeine-free herbal tea."],
-  ["Herbal Tea — Medium",2.65,"Caffeine-free herbal tea."],
-  ["Herbal Tea — Large",3.15,"Caffeine-free herbal tea."],
-  ["Hot Chocolate — Small",2.25,"Rich hot chocolate."],
-  ["Hot Chocolate — Medium",2.75,"Rich hot chocolate."],
-  ["Hot Chocolate — Large",3.15,"Rich hot chocolate."],
-  ["Chocolate Drink",3.25,"Iced chocolate drink."],
-  ["20 oz. Soda",2.79,"Bottled fountain soda."],
-  ["Snapple — Small",2.79,"Snapple from the cooler."],
-  ["Snapple — Large",3.79,"Snapple from the cooler."],
-  ["Juice — Small",3.50,"Bottled juice."],
-  ["Juice — Large",6.99,"Bottled juice."],
-  ["Gatorade — Small",2.75,"Chilled Gatorade."],
-  ["Gatorade — Large",3.50,"Chilled Gatorade."],
-  ["Bottled Water",1.50,"Chilled bottled water."]
+  ["Hot Tea — Small",2.50,"Hot brewed tea."],
+  ["Hot Tea — Medium",2.99,"Hot brewed tea."],
+  ["Hot Tea — Large",3.25,"Hot brewed tea."],
+  ["Flavored Coffee — Small",2.50,"Fresh-brewed flavored coffee."],
+  ["Flavored Coffee — Medium",2.99,"Fresh-brewed flavored coffee."],
+  ["Flavored Coffee — Large",3.25,"Fresh-brewed flavored coffee."],
+  ["Herbal Tea — Small",2.50,"Caffeine-free herbal tea."],
+  ["Herbal Tea — Medium",2.99,"Caffeine-free herbal tea."],
+  ["Herbal Tea — Large",3.25,"Caffeine-free herbal tea."],
+  ["Hot Chocolate — Small",2.50,"Rich hot chocolate."],
+  ["Hot Chocolate — Medium",2.99,"Rich hot chocolate."],
+  ["Hot Chocolate — Large",3.25,"Rich hot chocolate."]
 ];
 const comboData = [
   ["Buttered Bagel + 12 oz. Hot Beverage",5.50,"Doctor on the Run — Mon–Fri until 11 AM."],
@@ -272,6 +265,9 @@ document.querySelectorAll('.portion-btn').forEach(btn => {
   ];
   const MEATS   = ['Turkey','Ham','Pastrami','Bacon','Sausage','Roast Beef','Beef Bacon','Turkey Bacon'];
   const EXTRA_MEATS   = ['Turkey','Ham','Pastrami','Bacon','Sausage','Roast Beef','Beef Bacon','Turkey Bacon'];
+  /* premium meats that add $1 whether chosen as the base meat or as extra meat */
+  const SURCHARGE_MEATS = new Set(['Turkey Bacon','Beef Bacon']);
+  const MEAT_SURCHARGE = 1.00;
   const EXTRA_CHEESES = ['Mozzarella','Pepperjack','American','Swiss','Muenster','Cheddar','Provolone'];
   const BAGEL_FLAVORS = classicBagelFlavors.filter(f => f !== 'Rolls'); // full bagel lineup
   const FIXINGS = ['Salt','Pepper','Hot Sauce','Ketchup','Chipotle Mayo','Butter'];
@@ -297,7 +293,11 @@ document.querySelectorAll('.portion-btn').forEach(btn => {
 
   function total(){
     let t = baseObj().price;
+    // premium meat (turkey bacon / beef bacon) surcharge on the sandwich's base meat
+    if(baseObj().meat && SURCHARGE_MEATS.has(st.meat)) t += MEAT_SURCHARGE;
     t += st.addons.egg*1.00 + st.addons.cheese*1.00 + st.addons.meat*2.50;
+    // same surcharge on each extra meat of a premium type
+    if(st.addons.meat > 0 && SURCHARGE_MEATS.has(st.meatType)) t += st.addons.meat*MEAT_SURCHARGE;
     if(st.addons.hash) t += 1.25;
     if(st.addons.avocado) t += 2.00;
     t += st.veggies.size*0.50;
@@ -316,7 +316,7 @@ document.querySelectorAll('.portion-btn').forEach(btn => {
     if(!baseObj().meat){ step.style.display='none'; return; }
     step.style.display='';
     $('eggMeatGrid').innerHTML = MEATS.map(m => `
-      <button type="button" class="pick ${st.meat===m?'sel':''}" data-kind="meat" data-id="${esc(m)}">${m}</button>`).join('');
+      <button type="button" class="pick ${st.meat===m?'sel':''}" data-kind="meat" data-id="${esc(m)}">${m}${SURCHARGE_MEATS.has(m)?' <b>+$1</b>':''}</button>`).join('');
   }
   function renderBread(){
     $('eggBreadGrid').innerHTML = ['Roll','Bagel'].map(b => `
@@ -352,7 +352,7 @@ document.querySelectorAll('.portion-btn').forEach(btn => {
         const n = st.addons[a.id];
         const picker = a.pick ? `
           <select class="addon-pick" data-kind="addon-pick" data-id="${a.pickKey}" aria-label="Choose ${a.label}">
-            ${a.pick.map(o => `<option value="${esc(o)}" ${st[a.pickKey]===o?'selected':''}>${o}</option>`).join('')}
+            ${a.pick.map(o => `<option value="${esc(o)}" ${st[a.pickKey]===o?'selected':''}>${o}${a.pickKey==='meatType' && SURCHARGE_MEATS.has(o)?' (+$1)':''}</option>`).join('')}
           </select>` : '';
         return `<div class="addon ${n>0?'on':''}">
           <span class="addon-name">${a.label} <em>+${money(a.price)}</em></span>
@@ -557,7 +557,10 @@ subBtns.forEach(btn=>{
 /* ---------------- cart state ---------------- */
 let cart = []; // { name, price, qty }
 const DELIVERY_FEE = 4.99;
+const TAX_RATE = 0.0875; // 8.75% sales tax on all orders
 let fulfillment = 'pickup';
+
+function taxOn(amount){ return Math.round(amount * TAX_RATE * 100) / 100; }
 
 function addToCart(name, price){
   const existing = cart.find(i => i.name === name && i.price === price);
@@ -747,12 +750,15 @@ document.getElementById('checkoutBtn').addEventListener('click', ()=>{
 function recapHTML(){
   const sub = cartSubtotal();
   const fee = fulfillment === 'delivery' ? DELIVERY_FEE : 0;
-  const total = sub + fee;
+  const tax = taxOn(sub + fee);
+  const total = sub + fee + tax;
   return `
     <div class="order-recap">
       ${cart.map(i=>`<div class="recap-line"><span>${i.qty} × ${i.name}</span><span>${money(i.price*i.qty)}</span></div>`).join('')}
+      <div class="recap-line"><span>Subtotal</span><span>${money(sub)}</span></div>
       ${fulfillment === 'delivery' ? `<div class="recap-line"><span>Delivery fee</span><span>${money(fee)}</span></div>` : ''}
-      <div class="recap-line total"><span>Total (+ tax)</span><span>${money(total)}</span></div>
+      <div class="recap-line"><span>Tax (8.75%)</span><span>${money(tax)}</span></div>
+      <div class="recap-line total"><span>Total</span><span>${money(total)}</span></div>
     </div>`;
 }
 
@@ -787,7 +793,7 @@ function renderCheckoutForm(){
         <span><b>Demo checkout</b> — no real payment is processed yet. Once a payment provider is connected, this step will collect payment securely and the order will be sent straight to the shop.</span>
       </div>
 
-      <button type="submit" class="btn-primary btn-block">Place Demo Order — ${money(cartSubtotal() + (fulfillment==='delivery'?DELIVERY_FEE:0))}</button>
+      <button type="submit" class="btn-primary btn-block">Place Demo Order — ${money((()=>{ const s=cartSubtotal(), f=fulfillment==='delivery'?DELIVERY_FEE:0; return s+f+taxOn(s+f); })())}</button>
     </form>
   `;
   renderFulfillFields();
@@ -844,7 +850,8 @@ function onSubmitOrder(e){
     : PICKUP_ADDRESS;
   const sub = cartSubtotal();
   const fee = fulfillment==='delivery' ? DELIVERY_FEE : 0;
-  const total = sub + fee;
+  const tax = taxOn(sub + fee);
+  const total = sub + fee + tax;
   const orderNum = 'BD-' + Math.floor(1000 + Math.random()*9000);
 
   // remember this customer for next time
@@ -855,7 +862,7 @@ function onSubmitOrder(e){
     id: 'ord_' + Date.now() + '_' + Math.floor(Math.random()*1000),
     number: orderNum, ts: Date.now(),
     items: cart.map(i => ({ name:i.name, price:i.price, qty:i.qty })),
-    subtotal: sub, fee, total,
+    subtotal: sub, fee, tax, total,
     fulfillment, when, address, notes,
     customer: { name, phone, email },
     status: 'New'

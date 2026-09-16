@@ -692,6 +692,7 @@
   .drawer-foot{ padding:18px 22px 22px; border-top:1px solid var(--line); }
   .subtotal-row{ display:flex; justify-content:space-between; font-weight:700; font-size:16px; margin-bottom:14px; }
   .subtotal-row small{ display:block; font-weight:400; font-size:12px; color:var(--ink-soft); margin-top:2px; }
+  .tax-hint{ margin:0 0 14px; font-size:12px; color:var(--ink-soft); text-align:right; }
   .btn-block{ width:100%; text-align:center; }
 
   /* ---- checkout modal ---- */
