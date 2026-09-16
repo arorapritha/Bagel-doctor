@@ -522,6 +522,20 @@
   .stepper button:hover{ background:var(--accent); color:#fff; }
   .stepper-n{ font-weight:800; font-size:15px; min-width:1ch; text-align:center; color:var(--ink); }
 
+  /* ---------- per-item note field ---------- */
+  .menu-item{ border-bottom:1px dashed var(--line); }
+  .menu-item:last-child{ border-bottom:none; }
+  .menu-item > .row{ border-bottom:none; }
+  .row-note-wrap{ padding:0 2px 11px; }
+  .row-note{
+    width:100%; border:1px dashed var(--line); border-radius:9px; padding:8px 12px;
+    font-size:13px; background:var(--cream-soft); color:var(--ink); font-family:inherit;
+    transition:border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
+  }
+  .row-note::placeholder{ color:var(--ink-soft); }
+  .row-note:focus{ outline:none; border-style:solid; border-color:var(--accent); background:var(--card); box-shadow:0 0 0 3px var(--accent-soft); }
+  .row-note.has-value{ border-style:solid; border-color:var(--accent); background:var(--card); }
+
   .veg-row{ margin-top:14px; }
   .veg-label{ display:block; font-weight:600; font-size:12.5px; color:var(--ink-soft); margin-bottom:9px; }
 

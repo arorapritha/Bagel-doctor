@@ -171,29 +171,39 @@ function buildChips(container, list, unitPrice, suffix){
     `<button class="chip" data-name="${esc(name + suffix)}" data-price="${unitPrice}">${name}</button>`
   ).join('');
 }
-function buildRows(container, list){
+/* optional "make it your way" note field shown under an item */
+function noteFieldHTML(){
+  return `<div class="row-note-wrap"><input class="row-note" type="text" maxlength="140" placeholder="Make it your way — e.g. extra crispy, no peppers, on the side"></div>`;
+}
+function buildRows(container, list, opts={}){
   if(!container) return;
   container.innerHTML = list.map(([name, price, desc]) => `
-    <div class="row">
-      <span class="name">${name}${desc ? `<span class="desc">${desc}</span>` : ''}</span>
-      <span class="row-right">
-        <span class="price">${money(price)}</span>
-        <button class="add-btn" data-name="${esc(name)}" data-price="${price}" aria-label="Add ${esc(name)} to cart">+</button>
-      </span>
+    <div class="menu-item">
+      <div class="row">
+        <span class="name">${name}${desc ? `<span class="desc">${desc}</span>` : ''}</span>
+        <span class="row-right">
+          <span class="price">${money(price)}</span>
+          <button class="add-btn" data-name="${esc(name)}" data-price="${price}" aria-label="Add ${esc(name)} to cart">+</button>
+        </span>
+      </div>
+      ${opts.note ? noteFieldHTML() : ''}
     </div>`).join('');
 }
 /* hot sandwiches get one add-button per style (On Roll / On Hero) */
-function buildHot(container, list){
+function buildHot(container, list, opts={}){
   if(!container) return;
   container.innerHTML = list.map(([name, desc, options]) => `
-    <div class="row row-hot">
-      <span class="name">${name}<span class="desc">${desc}</span></span>
-      <span class="row-right hot-options">
-        ${Object.entries(options).map(([label, price]) => `
-          <button class="opt-btn" data-name="${esc(name + ' — ' + label)}" data-price="${price}">
-            ${label} <b>${money(price)}</b>
-          </button>`).join('')}
-      </span>
+    <div class="menu-item">
+      <div class="row row-hot">
+        <span class="name">${name}<span class="desc">${desc}</span></span>
+        <span class="row-right hot-options">
+          ${Object.entries(options).map(([label, price]) => `
+            <button class="opt-btn" data-name="${esc(name + ' — ' + label)}" data-price="${price}">
+              ${label} <b>${money(price)}</b>
+            </button>`).join('')}
+        </span>
+      </div>
+      ${opts.note ? noteFieldHTML() : ''}
     </div>`).join('');
 }
 
@@ -204,13 +214,13 @@ buildRows(document.getElementById('twistRows'), twistData);
 buildRows(document.getElementById('miniRows'), miniData);
 buildRows(document.getElementById('extraRows'), extrasData);
 buildRows(document.getElementById('flatSpreadRows'), flatSpreadData);
-buildRows(document.getElementById('omeletteRows'), omeletteData);
-buildRows(document.getElementById('breakfastRows'), breakfastData);
+buildRows(document.getElementById('omeletteRows'), omeletteData, {note:true});
+buildRows(document.getElementById('breakfastRows'), breakfastData, {note:true});
 buildRows(document.getElementById('breakfastSpecialRows'), breakfastSpecialData);
-buildRows(document.getElementById('saladRows'), saladData);
-buildRows(document.getElementById('meatRows'), meatData);
-buildHot(document.getElementById('hotRows'), hotSandwichData);
-buildRows(document.getElementById('lunchSpecialRows'), lunchSpecialData);
+buildRows(document.getElementById('saladRows'), saladData, {note:true});
+buildRows(document.getElementById('meatRows'), meatData, {note:true});
+buildHot(document.getElementById('hotRows'), hotSandwichData, {note:true});
+buildRows(document.getElementById('lunchSpecialRows'), lunchSpecialData, {note:true});
 buildRows(document.getElementById('coffeeRows'), coffeeData);
 buildRows(document.getElementById('beverageRows'), beverageData);
 buildRows(document.getElementById('comboRows'), comboData);
@@ -393,6 +403,9 @@ document.querySelectorAll('.portion-btn').forEach(btn => {
     let name = 'Egg Sandwich · ' + summaryText();
     if(parts.length) name += ' · ' + parts.join(', ');
     if(st.fixings.size) name += ' (' + Array.from(st.fixings).join(', ') + ')';
+    const noteEl = document.getElementById('eggNote');
+    const note = noteEl && noteEl.value.trim();
+    if(note) name += ' — “' + note + '”';
     return name;
   }
 
@@ -712,7 +725,20 @@ document.addEventListener('click', (e)=>{
   target.classList.remove('added'); void target.offsetWidth; target.classList.add('added');
   floatPlusOne(target);
   flyToCart(target);
-  addToCart(target.dataset.name, parseFloat(target.dataset.price));
+  // fold in this item's "make it your way" note, if the customer typed one
+  let name = target.dataset.name;
+  const item = target.closest('.menu-item');
+  const noteEl = item && item.querySelector('.row-note');
+  const note = noteEl && noteEl.value.trim();
+  if(note) name += ' — “' + note + '”';
+  addToCart(name, parseFloat(target.dataset.price));
+});
+
+/* highlight a note field once it has text */
+document.addEventListener('input', (e)=>{
+  const n = e.target.closest && e.target.closest('.row-note');
+  if(!n) return;
+  n.classList.toggle('has-value', n.value.trim().length > 0);
 });
 
 /* ---------------- toast ---------------- */
